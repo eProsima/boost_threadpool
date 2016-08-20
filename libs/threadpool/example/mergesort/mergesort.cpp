@@ -1,7 +1,7 @@
 /*! \file
  * \brief Mergesort example.
  *
- * This example shows how to use the threadpool library. 
+ * This example shows how to use the threadpool library.
  *
  * Copyright (c) 2005-2006 Philipp Henkel
  *
@@ -47,8 +47,8 @@ string to_string(const T& value)
 
 unsigned long get_ms_diff(boost::xtime& start, boost::xtime& end)
 {
-  boost::xtime::xtime_sec_t start_ms = start.sec * 1000	+ start.nsec/1000000; 
-  boost::xtime::xtime_sec_t end_ms = end.sec * 1000	+ end.nsec/1000000; 
+  boost::xtime::xtime_sec_t start_ms = start.sec * 1000	+ start.nsec/1000000;
+  boost::xtime::xtime_sec_t end_ms = end.sec * 1000	+ end.nsec/1000000;
   return static_cast<unsigned long>(end_ms - start_ms);
 }
 
@@ -69,10 +69,10 @@ public:
       boost::xtime xt;
       boost::xtime_get(&xt, boost::TIME_UTC);
       int duration = 1+(m_content % 4);
-      xt.nsec += 250 * 1000 * duration;	
-      boost::thread::sleep(xt); 
+      xt.nsec += 250 * 1000 * duration;
+      boost::thread::sleep(xt);
 	    print(".");
-    }	
+    }
     return m_content < l.m_content;
   }
 
@@ -85,16 +85,16 @@ template<class T>
 class merge_job
 {
 public:
-  merge_job(boost::shared_array<T> data, unsigned int position, unsigned int length) 
+  merge_job(boost::shared_array<T> data, unsigned int position, unsigned int length)
     : m_data(data)
     , m_position(position)
-    , m_length(length) 
+    , m_length(length)
   {
     print("merge job created : " + to_string(m_position) +", "+ to_string(m_length) +"\n");
   }
 
   void run()
-  {	
+  {
     print("merge job running :   " + to_string(m_position) +", "+ to_string(m_length) +"\n");
 
     T* begin = m_data.get();
@@ -122,17 +122,17 @@ protected:
 
 //
 // A demonstration of the thread_pool class
-int main (int argc, char * const argv[]) 
+int main (int argc, char * const argv[])
 {
   print("MAIN: construct thread pool\n");
 
-		
+
 
   boost::xtime start;
   boost::xtime_get(&start, boost::TIME_UTC);
 
   int exponent = 7;
-  int data_len = 1 << exponent;  // = pow(2, exponent) 
+  int data_len = 1 << exponent;  // = pow(2, exponent)
 
   print("MAIN: sort array with "+ to_string(data_len) + " elements.\n");
 
@@ -150,7 +150,7 @@ int main (int argc, char * const argv[])
   /***************************/
 
   pool tp;
-  tp.size_controller().resize(5);	
+  tp.size_controller().resize(5);
 
 // merge data array
   for(int step = 1; step <= exponent; step++)
@@ -163,21 +163,21 @@ int main (int argc, char * const argv[])
     {
       // sort partition
       boost::shared_ptr<merge_job<image> > job(new merge_job<image>(data, partition*partition_size, partition_size));
-      //tp->schedule(prio_task_func(5, boost::bind(&merge_job<image>::run, job)));
+      //tp->schedule(priority_task_functor(5, boost::bind(&merge_job<image>::run, job)));
       schedule(tp, boost::bind(&merge_job<image>::run, job));
      // schedule(tp, job);
     }
     tp.wait();	// wait until all partitions are sorted
-  } 
+  }
 
   boost::xtime end;
-  boost::xtime_get(&end, boost::TIME_UTC);				
+  boost::xtime_get(&end, boost::TIME_UTC);
 
   print("\nMAIN: duration " + to_string(get_ms_diff(start, end)) + " ms \n");
 
   print("\nMAIN: check if array is sorted... \n");
 
-  // check if array is sorted ascendingly 
+  // check if array is sorted ascendingly
   bool ascending = true;
   for(int i = 0; i < data_len-1; i++)
   {

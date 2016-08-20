@@ -8,7 +8,7 @@ Change Log
   - Made threadpool compatible to boost::thread 1.37
   - Fixed hang problem in shutdown method (Thanks to Sohail Somani)
   - Adapted repository layout to boost (Thanks to Alex Ott)
-    
+
 0.2.4 (Stable)
   - Made threadpool compatible to boost::thread 1.35.x code base
   - Fixed compiler warning in scope_guard.hpp
@@ -42,7 +42,7 @@ Change Log
   - Cosmetic code change: Replaced keyword 'class' with 'typename' in template definitions
   - Revised tutorials
   - New requirements: tasks functions should not and schedulers shall not throw exceptions
-  
+
 
 0.2.0 (Development)
   - Moved threadpool into the boost namespace: boost::threadpool
@@ -54,7 +54,7 @@ Change Log
   - Renamed 'join()' to 'wait()' as 'join' indicates the termination of thread. That was not the case in pool::join.
   - Changed internal container of lifo and fifo schedulers to improve efficiency.
   - Improved code reference documentation (source code browser)
-  - Renamed thread_func into task_func
+  - Renamed thread_func into task_functor
   - Added += operator to scoped_pool to ease scheduling of tasks
   - Refactored file structures and class names
   - Added a new task concept (named subtask) which allows the combination of sequential and parallel execution
@@ -78,7 +78,7 @@ Change Log
   - Finished threadpool reference
   - Class pool_adaptor was replaced by smart_pool
   - Minor pool improvements
-  - First tutorial page online 
+  - First tutorial page online
 
 0.1.4 (Development)
   - Created the pool's homepage: http://threadpool.sourceforge.net
@@ -88,5 +88,5 @@ Change Log
 0.1.3 (Development)
   - First public release
   - Added mergesort example
-  - Added tutorial 
+  - Added tutorial
   - Implementation of threadpool core and related classes

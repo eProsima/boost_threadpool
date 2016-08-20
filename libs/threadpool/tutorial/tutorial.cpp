@@ -1,7 +1,7 @@
 /*! \file
 * \brief threadpool tutorial.
 *
-* This file contains a tutorial for the threadpool library. 
+* This file contains a tutorial for the threadpool library.
 *
 * Copyright (c) 2005-2007 Philipp Henkel
 *
@@ -74,7 +74,7 @@ int loops = 0;
 bool looped_task()
 {
   print("  looped_task()\n");
-  return ++loops < 5; 
+  return ++loops < 5;
 }
 
 
@@ -104,15 +104,15 @@ public:
 
 //
 // A demonstration of the thread_pool class
-int main (int , char * const []) 
+int main (int , char * const [])
 {
   print("\nWelcome to the threadpool tutorial!\n");
 
   print("\n**************************************\n");
   print("Section 1: Quick Start\n");
-  
+
   //void func()
-  {	
+  {
     print("  Create a new thread pool\n");
     pool tp(2); // tp is handle to the pool
 
@@ -122,20 +122,20 @@ int main (int , char * const [])
     tp.schedule(&task_3);
     tp.schedule(boost::bind(task_with_parameter, 4));
 
-    // The pool handle tp is allocated on stack and will 
-    // be destructed if it gets out of scope. Before the 
-    // pool is destroyed it waits for its tasks. 
-    // That means the current thread of execution is 
-    // blocked at the end of the function 
+    // The pool handle tp is allocated on stack and will
+    // be destructed if it gets out of scope. Before the
+    // pool is destroyed it waits for its tasks.
+    // That means the current thread of execution is
+    // blocked at the end of the function
     // (until all tasks are processed).
     // while (&tp){int i = 3; ++i;}
-  }	 
+  }
 
   { // Section Futures
     print("\n**************************************\n");
     print("Section 1: Futures\n");
-    
-  //typedef thread_pool<task_func, fifo_scheduler, static_size, empty_controller, wait_for_all_tasks> test_pool;
+
+  //typedef thread_pool<task_functor, fifo_scheduler, static_size, empty_controller, wait_for_all_tasks> test_pool;
 
     pool tp;
 
@@ -145,7 +145,7 @@ int main (int , char * const [])
     boost::xtime t;
     tp.wait(t);
     bool test = tp.empty();
-    if(test) 
+    if(test)
     {
       test = false;
     }
@@ -180,20 +180,20 @@ value ++;
     // Create a lifo_pool: last task in, first task out
     lifo_pool tp(0);
 
-    print("  Add tasks (using the pool's schedule function)\n");	
+    print("  Add tasks (using the pool's schedule function)\n");
     schedule(tp, &task_1);
     schedule(tp, &task_2);
     schedule(tp, &task_3);
 
     // tp.wait();  This would be a deadlock as there are no threads which process the tasks.
 
-    print("  Add some threads ...\n");	
+    print("  Add some threads ...\n");
     tp.size_controller().resize(5);
 
     print("  Wait until all tasks are finished ...\n");
     tp.wait();
-    print("  Tasks finished!\n");	
-  }	
+    print("  Tasks finished!\n");
+  }
 
 
 
@@ -201,23 +201,23 @@ value ++;
     print("\n**************************************\n");
     print("Section 3: Prioritized Tasks\n");
 
-    prio_pool tp(0);
+    priority_pool tp(0);
 
 
-    print("  Add prioritized tasks ...\n");	
-    schedule(tp, prio_task_func(1, &task_1));
-    schedule(tp, prio_task_func(10,&task_2));
-    schedule(tp, prio_task_func(5,&task_3));
+    print("  Add prioritized tasks ...\n");
+    schedule(tp, priority_task_functor(1, &task_1));
+    schedule(tp, priority_task_functor(10,&task_2));
+    schedule(tp, priority_task_functor(5,&task_3));
 
     // Tasks are ordered according to their priority: task_2, task_4, task_3, task_1
 
-    print("  Thread added\n");	
+    print("  Thread added\n");
     tp.size_controller().resize(10);
 
     print("  Wait until all tasks are finished ...\n");
     tp.wait();
-    print("  Tasks finished!\n");	
-  }		
+    print("  Tasks finished!\n");
+  }
 
 
 /* */
@@ -227,7 +227,7 @@ value ++;
     // Create the pool directly
 /*
 TODO
-boost::shared_ptr<fifo_pool> tp = fifo_pool::create_pool(5);			
+boost::shared_ptr<fifo_pool> tp = fifo_pool::create_pool(5);
 
     print("  Add tasks ...\n");
     tp->schedule(&task_1);
@@ -238,10 +238,10 @@ boost::shared_ptr<fifo_pool> tp = fifo_pool::create_pool(5);
     print("  Wait until all tasks are finished ...\n");
     tp->wait();
 */
-  
+
     print("  Tasks finished!\n");
-  			
-  }			
+
+  }
 
 
   print("\n**************************************\n");
@@ -256,7 +256,7 @@ boost::shared_ptr<fifo_pool> tp = fifo_pool::create_pool(5);
 
     fifo_pool tp;
     tp.size_controller().resize(0);
-    tp.empty(); 
+    tp.empty();
   }
 
   return 0;

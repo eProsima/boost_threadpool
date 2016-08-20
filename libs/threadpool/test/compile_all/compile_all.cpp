@@ -1,7 +1,7 @@
 /*! \file
 * \brief threadpool tutorial.
 *
-* This file contains a tutorial for the threadpool library. 
+* This file contains a tutorial for the threadpool library.
 *
 * Copyright (c) 2005-2006 Philipp Henkel
 *
@@ -80,7 +80,7 @@ int loops = 0;
 bool looped_task()
 {
   print("  looped_task()\n");
-  return ++loops < 5; 
+  return ++loops < 5;
 }
 
 
@@ -94,7 +94,7 @@ int task_int()
 void fifo_pool_test()
 {
     pool tp;
-    
+
     tp.schedule(&task_1);
     tp.schedule(boost::bind(task_with_parameter, 4));
 
@@ -106,7 +106,7 @@ void fifo_pool_test()
     size_t active_threads   = tp.active();
     size_t pending_threads  = tp.pending();
     size_t total_threads    = tp.size();
-    
+
     size_t dummy = active_threads + pending_threads + total_threads;
     dummy++;
 
@@ -125,9 +125,9 @@ void lifo_pool_test()
 
 void prio_pool_test()
 {
-    prio_pool tp(2);
-    schedule(tp, prio_task_func(1, &task_1));
-    schedule(tp, prio_task_func(10,&task_2));
+    priority_pool tp(2);
+    schedule(tp, priority_task_functor(1, &task_1));
+    schedule(tp, priority_task_functor(10,&task_2));
 }
 
 
@@ -139,7 +139,7 @@ void future_test()
 }
 
 
-int main (int , char * const []) 
+int main (int , char * const [])
 {
   fifo_pool_test();
   lifo_pool_test();
