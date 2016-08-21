@@ -136,14 +136,14 @@ namespace boost {
             typename disable_if<
                     is_void<ResultType>,
                     future<ResultType>>::type schedule(task_type<ResultType> const &task) {
-                shared_ptr<packaged_task < ResultType()>>
-                packaged(::boost::make_shared<packaged_task < ResultType()>>
-                (task.task_function));
-                future <ResultType> ret(packaged->get_future());
+                shared_ptr<packaged_task<ResultType()>>
+                        packaged(::boost::make_shared<packaged_task<ResultType()>>
+                        (task.task_function));
+                future<ResultType> ret(packaged->get_future());
 
                 Task<void> modified_task = task;
                 modified_task.task_function = bind<void>([](shared_ptr<
-                        packaged_task < ResultType()>> const &wrapper) {
+                        packaged_task<ResultType()>> const &wrapper) {
                     (*wrapper)();
                 }, packaged);
 
