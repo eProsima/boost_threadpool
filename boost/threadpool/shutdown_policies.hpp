@@ -6,7 +6,7 @@
 * when the pool is not referenced any longer.
 *
 * Copyright (c) 2005-2007 Philipp Henkel
-* Copyright (c) 2016 Mikhail Komarov
+* Copyright (c) 2016 Mikhail Komarov (nemo1369@gmail.com)
 *
 * Use, modification, and distribution are  subject to the
 * Boost Software License, Version 1.0. (See accompanying  file
