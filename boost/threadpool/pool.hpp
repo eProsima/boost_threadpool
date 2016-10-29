@@ -128,14 +128,8 @@ namespace boost {
             * \return true, if the task could be scheduled and false otherwise.
             */
 
-            bool schedule(task_type<void> const &task) {
-                return this->m_core->schedule(task);
-            }
-
-            template<typename ResultType>
-            typename disable_if<
-                    is_void<ResultType>,
-                    future<ResultType>>::type schedule(task_type<ResultType> const &task) {
+            template<typename ResultType = void>
+            future<ResultType> schedule(task_type<ResultType> const &task) {
                 shared_ptr<packaged_task<ResultType()>>
                         packaged(::boost::make_shared<packaged_task<ResultType()>>
                         (task.task_function));
@@ -147,7 +141,7 @@ namespace boost {
                     (*wrapper)();
                 }, packaged);
 
-                if (this->schedule(modified_task)) {
+                if (this->m_core->schedule(modified_task)) {
                     return ::boost::move(ret);
                 } else {
                     throw std::invalid_argument("Invalid function passed to be executed");
