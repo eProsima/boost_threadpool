@@ -23,7 +23,7 @@ target_include_directories(boost_threadpool INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         )
 if(NOT Boost_FOUND)
-    find_package(Boost COMPONENTS thread)
+    find_package(Boost 1.61 COMPONENTS thread)
 endif()
 
 if(Boost_FOUND)
