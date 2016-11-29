@@ -14,7 +14,13 @@ set_property(TARGET boost_threadpool PROPERTY EXPORT_NAME threadpool)
 
 include(RypplWriteConfig)
 
-target_compile_options(boost_threadpool INTERFACE "-std=c++11")
+if(${CMAKE_TARGET_ARCHITECTURE} STREQUAL ${CMAKE_HOST_SYSTEM_PROCESSOR})
+    include(FindCXX11)
+else()
+    set(CXX11_FLAGS "-std=gnu++11")
+endif()
+
+target_compile_options(boost_threadpool INTERFACE ${CXX11_FLAGS})
 
 target_include_directories(boost_threadpool INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
