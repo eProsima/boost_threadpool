@@ -12,12 +12,9 @@ add_library(boost_threadpool INTERFACE)
 add_library(boost::threadpool ALIAS boost_threadpool)
 set_property(TARGET boost_threadpool PROPERTY EXPORT_NAME threadpool)
 
-include(FindCXX11)
 include(RypplWriteConfig)
 
-if(CXX11_FOUND)
-    target_compile_options(boost_threadpool INTERFACE ${CXX11_FLAGS})
-endif()
+target_compile_options(boost_threadpool INTERFACE "-std=c++11")
 
 target_include_directories(boost_threadpool INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
