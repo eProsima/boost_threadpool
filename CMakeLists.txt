@@ -23,24 +23,24 @@ endif()
 target_compile_options(boost_threadpool INTERFACE ${CXX11_FLAGS})
 
 target_include_directories(boost_threadpool INTERFACE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-        )
-if(NOT Boost_FOUND)
+                           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                           )
+if(NOT Boost_Thread_FOUND)
     find_package(Boost 1.61 COMPONENTS thread)
 endif()
 
-if(Boost_FOUND)
+if(Boost_Thread_FOUND)
     target_include_directories(boost_threadpool INTERFACE
-            $<BUILD_INTERFACE:${Boost_INCLUDE_DIRS}>)
+                               $<BUILD_INTERFACE:${Boost_INCLUDE_DIRS}>)
     target_link_libraries(boost_threadpool INTERFACE ${Boost_LIBRARIES})
-else()
-    target_link_libraries(boost_threadpool INTERFACE
-            boost::thread
-            boost::type_traits
-            boost::function
-            boost::bind
-            )
 endif()
+
+target_link_libraries(boost_threadpool INTERFACE
+                      boost::thread
+                      boost::type_traits
+                      boost::function
+                      boost::bind
+                      )
 
 install(DIRECTORY boost DESTINATION include/)
 
@@ -55,16 +55,16 @@ install(EXPORT ${PROJECT_NAME}Targets
         )
 
 write_config_file("${CMAKE_BINARY_DIR}/lib/cmake/${PROJECT_NAME}/${PROJECT_NAME}Config.cmake"
-        Fusion
-        Parameter
-        UBLAS
-        Random
-        Tuple
-        )
+                  Fusion
+                  Parameter
+                  UBLAS
+                  Random
+                  Tuple
+                  )
 write_basic_package_version_file("${CMAKE_BINARY_DIR}/lib/cmake/${PROJECT_NAME}/${PROJECT_NAME}ConfigVersion.cmake"
-        VERSION ${LIBRARY_VERSION}
-        COMPATIBILITY AnyNewerVersion
-        )
+                                 VERSION ${LIBRARY_VERSION}
+                                 COMPATIBILITY AnyNewerVersion
+                                 )
 
 install(FILES
         "${CMAKE_BINARY_DIR}/lib/cmake/${PROJECT_NAME}/${PROJECT_NAME}Config.cmake"
@@ -73,5 +73,5 @@ install(FILES
         )
 
 export(TARGETS boost_threadpool
-        NAMESPACE boost::
-        FILE ${CMAKE_BINARY_DIR}/lib/cmake/${PROJECT_NAME}/${PROJECT_NAME}Targets.cmake)
+       NAMESPACE boost::
+       FILE ${CMAKE_BINARY_DIR}/lib/cmake/${PROJECT_NAME}/${PROJECT_NAME}Targets.cmake)
