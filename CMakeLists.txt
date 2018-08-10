@@ -25,22 +25,21 @@ target_compile_options(boost_threadpool INTERFACE ${CXX11_FLAGS})
 target_include_directories(boost_threadpool INTERFACE
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
                            )
-if(NOT Boost_Thread_FOUND)
-    find_package(Boost 1.61 COMPONENTS thread)
-endif()
 
-if(Boost_Thread_FOUND)
+find_package(Boost COMPONENTS thread)
+
+if(Boost_FOUND)
     target_include_directories(boost_threadpool INTERFACE
                                $<BUILD_INTERFACE:${Boost_INCLUDE_DIRS}>)
     target_link_libraries(boost_threadpool INTERFACE ${Boost_LIBRARIES})
+else()
+    target_link_libraries(boost_threadpool INTERFACE
+                          boost::thread
+                          boost::type_traits
+                          boost::function
+                          boost::bind
+                          )
 endif()
-
-target_link_libraries(boost_threadpool INTERFACE
-                      boost::thread
-                      boost::type_traits
-                      boost::function
-                      boost::bind
-                      )
 
 install(DIRECTORY boost DESTINATION include/)
 
