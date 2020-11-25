@@ -14,7 +14,9 @@ set_property(TARGET boost_threadpool PROPERTY EXPORT_NAME threadpool)
 
 include(RypplWriteConfig)
 
-if(${CMAKE_TARGET_ARCHITECTURE} STREQUAL ${CMAKE_HOST_SYSTEM_PROCESSOR})
+if(NOT CMAKE_TARGET_ARCHITECTURE)
+    include(FindCXX11)
+elseif(${CMAKE_TARGET_ARCHITECTURE} STREQUAL ${CMAKE_HOST_SYSTEM_PROCESSOR})
     include(FindCXX11)
 else()
     set(CXX11_FLAGS "-std=gnu++11")
