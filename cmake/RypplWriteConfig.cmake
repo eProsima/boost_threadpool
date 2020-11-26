@@ -35,7 +35,7 @@ macro(write_config_file filename)
             ")
         foreach(dep ${args})
             file(APPEND ${filename} "
-                find_dependency(Boost${dep} ${BOOST_VERSION})
+	        find_dependency(Boost${dep} ${Boost_VERSION_STRING})
                 ")
         endforeach()
     endif()

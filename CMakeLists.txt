@@ -55,13 +55,7 @@ install(EXPORT ${PROJECT_NAME}Targets
         DESTINATION lib/cmake/${PROJECT_NAME}
         )
 
-write_config_file("${CMAKE_BINARY_DIR}/lib/cmake/${PROJECT_NAME}/${PROJECT_NAME}Config.cmake"
-                  Fusion
-                  Parameter
-                  UBLAS
-                  Random
-                  Tuple
-                  )
+write_config_file("${CMAKE_BINARY_DIR}/lib/cmake/${PROJECT_NAME}/${PROJECT_NAME}Config.cmake")
 write_basic_package_version_file("${CMAKE_BINARY_DIR}/lib/cmake/${PROJECT_NAME}/${PROJECT_NAME}ConfigVersion.cmake"
                                  VERSION ${LIBRARY_VERSION}
                                  COMPATIBILITY AnyNewerVersion
